@@ -1,0 +1,76 @@
+{
+  "input_csv": "data/output.csv",
+  "output_csv": "output/output.csv",
+  "queue_csv": "output/repair_queue.csv",
+  "checkpoint_json": "output/checkpoint.json",
+  "log_file": "output/enrich.log",
+  "log_max_mb": 5,
+
+  "start_record": 1101,
+  "end_record": null,
+
+  "active_provider": "omniroute",
+  "providers": {
+    "omniroute": {
+      "base_url": "http://127.0.0.1:20128/v1",
+      "api_key_env": "OMNIROUTE_API_KEY",
+      "models": ["antigravity/gemini-3.7-flash-tiered", "antigravity/gemini-3.1-flash-lite", "antigravity/gemini-3-flash", "antigravity/claude-sonnet-4-6-low", "antigravity/claude-opus-4-6-thinking-low", "gemini/gemini-3.1-flash-lite"],
+      "max_tokens": 2000,
+      "timeout_seconds": 180,
+      "temperature": 0,
+      "json_mode": "auto"
+    },
+    "openrouter": {
+      "base_url": "https://openrouter.ai/api/v1",
+      "api_key_env": "OPENROUTER_API_KEY",
+      "models": ["nvidia/nemotron-3-ultra-550b-a55b:free"],
+      "max_tokens": 3000,
+      "timeout_seconds": 240,
+      "temperature": 0,
+      "json_mode": "auto",
+      "extra_body": {}
+    }
+  },
+
+  "batch_size": 50,
+  "concurrency": 1,
+  "request_sleep_seconds": 0.2,
+  "max_attempts_per_row": 3,
+  "max_queue_attempts": 4,
+  "retry_sleep_seconds": [2, 4, 8],
+  "max_rate_limit_waits": 6,
+  "max_consecutive_errors": 10,
+  "dead_model_revive_hours": 6,
+  "max_words_per_field": 50,
+  "contact_fallback_to_source_website": true,
+
+  "model_failover": {
+    "enabled": true,
+    "cooldown_seconds": 2,
+    "rotate_on_patterns": ["quota", "insufficient", "credit", "billing", "expired",
+                           "unauthorized", "authentication", "no endpoints"]
+  },
+
+  "enrichment_fields": [
+    {
+      "name": "rank",
+      "type": "string",
+      "description": "Up to 3 published rankings you actually know: organisation, position or band, year. If none, an AI estimate of standing (national/regional tier) with its basis; no invented numbers or sources."
+    },
+    {
+      "name": "entry",
+      "type": "string",
+      "description": "Admission requirements: qualifications, application route, entrance exams, language tests, and portfolio/audition/interview where relevant. Acceptance rate only if known."
+    },
+    {
+      "name": "cost_shape",
+      "type": "string",
+      "description": "Approximate annual tuition: currency, domestic vs international, academic year if known; a range if estimated. Tuition only, not living costs."
+    },
+    {
+      "name": "contact",
+      "type": "string",
+      "description": "Official admissions/general email, phone or contact page you actually know. Otherwise the record's website, written as 'General website: <url>'."
+    }
+  ]
+}

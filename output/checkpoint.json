@@ -1,0 +1,29 @@
+{
+  "updated_at": "2026-10-03T20:20:38+00:00",
+  "migration": {
+    "complete_rows": 1167,
+    "repair_queue_rows": 5607,
+    "source_records": 10266
+  },
+  "providers": {
+    "omniroute": {
+      "active_model": "antigravity/gemini-3.7-flash-tiered",
+      "dead_models": {},
+      "last_run_at": "2026-10-03T20:20:38+00:00"
+    },
+    "openrouter": {
+      "active_model": null,
+      "dead_models": {
+        "nvidia/nemotron-3-ultra-550b-a55b:free": "2026-10-02T04:23:42+00:00"
+      },
+      "last_run_at": "2026-10-02T04:23:44+00:00"
+    }
+  },
+  "schema": "3aa328c61cbf",
+  "last_run": {
+    "provider": "omniroute",
+    "batch": 1,
+    "batches": 1,
+    "ok": 15
+  }
+}
